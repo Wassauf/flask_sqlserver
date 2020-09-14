@@ -12,7 +12,7 @@ source venv/bin/activate
 ### On Windows:
 .\venv\Scripts\activate
 
-## 3. Install deoendencies
+## 3. Install dependencies
 - pip install pyodbc
 - pip install flask_restful
 
