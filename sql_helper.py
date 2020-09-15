@@ -33,6 +33,9 @@ class SQL_Helper:
         result = []
         for row in cursor.fetchall():
                 result.append(dict(zip(columns, row)))
+
+        cursor.close()
+        cnxn.close()
         
         return result[0]
     
@@ -46,12 +49,22 @@ class SQL_Helper:
         # password = config['CONNECTION']['PASS']
         # driver = config['CONNECTION']['DRIVER']
         # cnxn = pyodbc.connect('DRIVER={'+driver+'};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
+        # cursor = cnxn.cursor()
         cnxn, cursor = SQL_Helper.init(self)
-        cursor = cnxn.cursor()    
         cursor.execute(query_string)
         columns = [column[0] for column in cursor.description]
         result = []
         for row in cursor.fetchall():
                 result.append(dict(zip(columns, row)))
+
+        cursor.close()
+        cnxn.close()
         
         return result
+    
+    def insert_update(self,query_string):
+        cnxn, cursor = SQL_Helper.init(self)
+        cursor.execute(query_string)
+        cnxn.commit()
+        cursor.close()
+        cnxn.close()

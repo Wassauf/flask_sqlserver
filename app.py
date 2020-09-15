@@ -40,7 +40,10 @@ api = Api(app)
 
 
 
+api.add_resource(GetProduct, '/products/<int:product_id>')
 api.add_resource(GetProducts, '/products')
+api.add_resource(AddProduct, '/product_add')
+
 
 if __name__ == '__main__':
     app.run(debug=True)

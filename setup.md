@@ -1,7 +1,7 @@
 
 ## 1. Create a Virtual Environment using commands
 
-- pip install virtualenv
+- pip3 install virtualenv
 - virtualenv venv
 
 ## 2. Activate virtual Environment
@@ -13,8 +13,8 @@ source venv/bin/activate
 .\venv\Scripts\activate
 
 ## 3. Install dependencies
-- pip install pyodbc
-- pip install flask_restful
+- pip3 install pyodbc
+- pip3 install flask_restful
 
 ## 4. Create a config file with name 'config.ini'
 ### copy the following content into that config file with filled information and remove <> 
