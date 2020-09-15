@@ -7,13 +7,13 @@ from apis import *
 config = configparser.ConfigParser()
 config.read('config.ini')
 
-server = config['CONNECTION']['HOST']
-database = config['CONNECTION']['DATABASE']
-username = config['CONNECTION']['USER'] 
-password = config['CONNECTION']['PASS']
-driver = config['CONNECTION']['DRIVER']
-cnxn = pyodbc.connect('DRIVER={'+driver+'};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
-cursor = cnxn.cursor()
+# server = config['CONNECTION']['HOST']
+# database = config['CONNECTION']['DATABASE']
+# username = config['CONNECTION']['USER'] 
+# password = config['CONNECTION']['PASS']
+# driver = config['CONNECTION']['DRIVER']
+# cnxn = pyodbc.connect('DRIVER={'+driver+'};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
+# cursor = cnxn.cursor()
 
 
 app = Flask(__name__)
