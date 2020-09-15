@@ -35,6 +35,5 @@ class AddProduct(Resource):
         json_data = request.get_json(force=True)
         insert_product_qry = "Insert into products(product_name,price) values ('"+str(json_data["product_name"])+"',"+str(json_data["price"])+");"
         sql.insert_update(self,insert_product_qry)
-        return jsonify(json_data)
-        
+        return jsonify({"status":201,"body":json_data})       
         pass
