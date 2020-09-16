@@ -12,15 +12,19 @@ from sql_helper import SQL_Helper as sql
 class GetProduct(Resource):
     def get(self,product_id):
         get_product_qry = "select * from products where id = "+ str(product_id)
-        product_data = sql.select_one(self,get_product_qry)
-        print(type(product_data))
-        print(product_data)
-        return jsonify({"status":200,'body': product_data })
+        product_data = sql.select_one(get_product_qry)
+        # print(type(product_data))
+        # print(product_data)
+        if product_data == None:
+            print("NOnenenennenne")
+            return jsonify({"status":404,'message': "Not Found" })
+        else:
+            return jsonify({"status":200,'body': product_data })
 
 class GetProducts(Resource):
     def get(self):
         get_product_qry = "select * from products"
-        product_data = sql.select_all(self,get_product_qry)
+        product_data = sql.select_all(get_product_qry)
         print(type(product_data))
         print(product_data)
         return jsonify({"status":200,'body': product_data })
@@ -33,7 +37,12 @@ class AddProduct(Resource):
         # args = parser.parse_args()
         
         json_data = request.get_json(force=True)
-        insert_product_qry = "Insert into products(product_name,price) values ('"+str(json_data["product_name"])+"',"+str(json_data["price"])+");"
-        sql.insert_update(self,insert_product_qry)
-        return jsonify({"status":201,"body":json_data})       
+        data_exists_qry = "select * from products where product_name = '"+str(json_data["product_name"])+"' and price = "+str(json_data["price"])
+        data = sql.select_one(data_exists_qry)
+        if data == None:
+            insert_product_qry = "Insert into products(product_name,price) values ('"+str(json_data["product_name"])+"',"+str(json_data["price"])+");"
+            sql.insert_update(insert_product_qry)
+            return jsonify({"status":201,"body":json_data})       
+        else:
+            return jsonify({"status":406, "message" : "Already exists"})
         pass
