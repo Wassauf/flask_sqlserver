@@ -16,18 +16,10 @@ class SQL_Helper:
         cnxn = pyodbc.connect('DRIVER={'+driver+'};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
         cursor = cnxn.cursor()
         return cnxn,cursor
+
     @staticmethod
     def select_one(query_string):
-        # config = configparser.ConfigParser()
-        # config.read('config.ini')
 
-        # server = config['CONNECTION']['HOST']
-        # database = config['CONNECTION']['DATABASE']
-        # username = config['CONNECTION']['USER'] 
-        # password = config['CONNECTION']['PASS']
-        # driver = config['CONNECTION']['DRIVER']
-        # cnxn = pyodbc.connect('DRIVER={'+driver+'};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
-        # cursor = cnxn.cursor()
         cnxn, cursor = SQL_Helper.init()
         cursor.execute(query_string)
         columns = [column[0] for column in cursor.description]
@@ -40,19 +32,11 @@ class SQL_Helper:
         if len(result) > 0:
             return result[0]
         else: 
-            return None  
+            return None
+
     @staticmethod
     def select_all(query_string):
-        # config = configparser.ConfigParser()
-        # config.read('config.ini')
 
-        # server = config['CONNECTION']['HOST']
-        # database = config['CONNECTION']['DATABASE']
-        # username = config['CONNECTION']['USER'] 
-        # password = config['CONNECTION']['PASS']
-        # driver = config['CONNECTION']['DRIVER']
-        # cnxn = pyodbc.connect('DRIVER={'+driver+'};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
-        # cursor = cnxn.cursor()
         cnxn, cursor = SQL_Helper.init()
         cursor.execute(query_string)
         columns = [column[0] for column in cursor.description]
@@ -64,6 +48,7 @@ class SQL_Helper:
         cnxn.close()
         
         return result
+
     @staticmethod
     def insert_update(query_string):
         cnxn, cursor = SQL_Helper.init()
