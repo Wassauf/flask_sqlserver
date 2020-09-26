@@ -2,7 +2,7 @@ from flask import Flask, jsonify
 from flask_restful import Resource, Api, fields, reqparse,request
 import pyodbc
 from sql_helper import SQL_Helper as sql
-
+from passlib.hash import pbkdf2_sha256
 
 # product_post_args = reqparse.RequestParser()
 # product_post_args.add_argument("product_name", type=str, help="Name of the Product")
@@ -44,3 +44,32 @@ class AddProduct(Resource):
         else:
             return jsonify({"status":406, "message" : "Already exists"})
         pass
+
+class CreaateUser(Resource):
+    def post(self):
+        json_data = request.get_json(force=True)
+        
+        if json_data != None: 
+            print(json_data.keys())
+            # if "email" in list(json_data.keys()):
+            try:
+                if "username" in json_data and "password" in json_data and "email" in json_data:
+                    first_name = json_data["first_name"]
+                    last_name = json_data["last_name"]
+                    username = json_data["username"]
+                    password = json_data["password"]
+                    email = json_data["email"]
+                    # print(username,password,email)
+                    hash = pbkdf2_sha256.hash(password)
+                    
+                    createuser_qry = f"insert into authenticated_users (first_name,last_name,username,password,is_active,email,date_joined,is_superuser) values ( '{first_name}','{last_name}','{username}','{hash}','0', '{email}',getutcdate(),0)"
+                    print(createuser_qry)
+                    sql.insert_update(createuser_qry)
+                    return jsonify({ "status": 201 ,"body":{"username":username,"message":"User Created"}})
+                else: 
+                    return jsonify({"message":"API expects keys username, password, and email"})
+
+            except Exception as e:
+                return jsonify({"message":"API expects keys username, password, and email"})
+                pass
+                
