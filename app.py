@@ -10,7 +10,8 @@ api = Api(app)
 api.add_resource(GetProduct, '/products/<int:product_id>')
 api.add_resource(GetProducts, '/products')
 api.add_resource(AddProduct, '/product_add')
+api.add_resource(CreaateUser,'/new_user')
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True ,host='0.0.0.0')
